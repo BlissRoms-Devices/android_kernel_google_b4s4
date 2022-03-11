@@ -2087,6 +2087,9 @@ unknown:
 				if (w_index != 0x5 || (w_value >> 8))
 					break;
 				interface = w_value & 0xFF;
+				if (interface >= MAX_CONFIG_INTERFACES ||
+				    !os_desc_cfg->interface[interface])
+					break;
 				buf[6] = w_index;
 				if (w_length == 0x0A) {
 					count = count_ext_prop(os_desc_cfg,
@@ -2365,6 +2368,7 @@ int composite_dev_prepare(struct usb_composite_driver *composite,
 
 	cdev->req->buf = kzalloc(USB_COMP_EP0_BUFSIZ +
 				(gadget->extra_buf_alloc), GFP_KERNEL);
+	cdev->req->buf = kzalloc(USB_COMP_EP0_BUFSIZ, GFP_KERNEL);
 	if (!cdev->req->buf)
 		goto fail;
 

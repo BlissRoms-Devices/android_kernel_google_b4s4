@@ -287,3 +287,4 @@ static inline int ion_handle_get_flags(struct ion_client *client,
 
 #endif /* CONFIG_ION */
 #endif /* _LINUX_ION_H */
+
